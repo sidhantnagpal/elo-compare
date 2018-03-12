@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %} Top {{ players|length }} Ranking {{ super() }} {% endblock %}
+
+{% block content %}
+
+<h3 class="text-center text-muted">
+	Top {{ players|length }} Ranking
+</h3>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>
+							#
+						</th>
+						<th>
+							Score
+						</th>
+						<th>
+							Name
+						</th>
+						<th>
+							Games
+						</th>
+						<th>
+							Wins
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for player in players %}
+						<tr>
+							<td>
+								
+							{{ loop.index }}
+
+							</td>
+							<td>
+								{{ player.score }}
+							</td>
+							<td>
+								<a href="/player/{{ player.id }}">{{ player.name }}</a>
+							</td>
+							<td>
+								{{ player.matches }}
+							</td>
+							<td>
+								{{ player.wins }}
+							</td>
+						</tr>
+
+					{% endfor %}
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

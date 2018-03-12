@@ -1,0 +1,32 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+{{ super() }}
+<link rel="icon" type="image/png" 
+  href="https://cdn3.iconfinder.com/data/icons/eldorado-stroke-layout/40/compare_disbalance-512.png">
+<meta name="mobile-web-app-capable" content="yes"></meta>
+{% endblock %}
+
+{% block title %}- ELO{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-inverse" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">ELO</a>	
+		</div>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/">Home</a></li>
+				<li><a href="/ranking/50">Ranking</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+{% endblock %}
