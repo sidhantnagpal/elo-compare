@@ -34,4 +34,4 @@ python server.py runserver # for hosting the web application
 Feel free to ping me via [email](mailto:sidhantnagpal97@gmail.com)! :)    
     
 # License
-MIT © [Sidhant Nagpal](mailto:sidhantnagpal97@gmail.com) 
+MIT
