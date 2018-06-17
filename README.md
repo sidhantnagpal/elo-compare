@@ -2,7 +2,7 @@
 ELO Compare is a Python Web App using Flask to rank a set of objects based on a user poll using a Modified ELO Rating Algorithm.
 
 # Supported Platforms
-Linux
+Linux <br />
 macOS
 
 # Setup
