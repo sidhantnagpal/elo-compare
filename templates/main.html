@@ -1,50 +1,35 @@
 {% extends "base.html" %}
 
-{% block title %} {{ players[0].name }} vs. {{ players[1].name }} {{ super() }}{% endblock %}
+{% block title %} Product Landing Page {{ super() }} {% endblock %}
 
 {% block content %}
-<div class="container">	
+<div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
 			<div class="row">
-				<div class="col-md-6">
-					<div class="thumbnail">
-						<img alt="Player1" src="{{ players[0].image }}" />
-						<div class="caption">
-							<h3>
-								<a href="/player/{{ players[0].id }}">{{ players[0].name }}</a>
-								<span class="badge">{{ players[0].score }}</span>
-							</h3>
-							<p>
-								<form method="POST">
-								{{ form.choice(value="1") }}
-								{{ form.submit(class="btn btn-primary btn-lg btn-block") }}
-								</form>
-							</p>
+				{% for player in players %}
+					<div class="col-md-6">
+						<div class="thumbnail">
+							<img alt="Player" src="{{ player.image }}" />
+							<div class="caption">
+								<h3>
+									<a href="/player/{{ player.id }}">{{ player.name }}</a>
+									<span class="badge">{{ player.score }}</span>
+								</h3>
+								<p>
+									<form method="POST">
+									{{ form.choice(value=loop.index|string) }}
+									{{ form.submit(class="btn btn-primary btn-lg btn-block") }}
+									</form>
+								</p>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="thumbnail">
-						<img alt="Player2" src="{{ players[1].image }}" />
-						<div class="caption">
-							<h3>
-								<a href="/player/{{ players[1].id }}">{{ players[1].name }}</a>
-								<span class="badge">{{ players[1].score }}</span>
-							</h3>
-							<p>
-								<form method="POST">
-								{{ form.choice(value="2") }}
-								{{ form.submit(class="btn btn-primary btn-lg btn-block") }}
-								</form>
-							</p>
-						</div>
-					</div>
-				</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>
-	
+
 </div>
 
 {% endblock %}

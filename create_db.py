@@ -10,17 +10,25 @@
 '''
 import sys, os
 from server import Player, db
+
 def main():
-	imgs = os.listdir('static/compare')
+	imgs = os.listdir('assets')
 
 	db.drop_all()
 	db.create_all()
-	print imgs
+	lst = []
 	for img in imgs:
-	    name = img.split('.')[0]
-	    name = map(str,name.split('_'))
+	    fullname = img.split('.')
+	    if len(fullname) == 1 or \
+	    		fullname[-1] not in ('jpg', 'jpeg', 'png', 'gif'):
+	    	continue
+	    name = fullname[0]
+	    lst.append(name)
+	    name = map(str, name.split('_'))
 	    obj = Player(name=' '.join(name).decode('utf-8'), imgurl=img.decode('utf-8'))
 	    db.session.add(obj)
+
 	db.session.commit()
+	print lst
 
 main()

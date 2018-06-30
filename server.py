@@ -42,7 +42,6 @@ class Player(db.Model):
     name = db.Column(db.Unicode(64), nullable=False)
     score = db.Column(db.Float, default=1500.00)
     wins = db.Column(db.Integer, default=0)
-    matches = db.Column(db.Integer, default=0)
     imgurl = db.Column(db.Unicode(254))
     added = db.Column(db.DateTime, default=datetime.now())
 
@@ -59,50 +58,35 @@ class Player(db.Model):
 def mainpage():
     buttonForm = ButtonForm()
 
-    # load 2 different, random players from db - first one with less matches
-    player_context = [__get_random_player(match_threshold=35), __get_random_player()]
-    while player_context[0].id == player_context[1].id:
-        player_context[1] = __get_random_player()
+    # load all players
+    n = Player.query.count()
+    player_context = Player.query.all()
 
     if session.new:
         session['player_store'] = [x.id for x in player_context]
 
     if buttonForm.is_submitted():
         choice = int(buttonForm.choice.data)
-        winner_id = session['player_store'][choice-1]
-        loser_id = session['player_store'][choice-2]
+        winner_id = session['player_store'][choice - 1]
+        loser_ids = [session['player_store'][i] for i in xrange(n) if i != choice - 1]
 
         winner = Player.query.get(winner_id)
-        loser = Player.query.get(loser_id)
+        losers = [Player.query.get(loser_id) for loser_id in loser_ids]
 
-        # print "[USER VOTED]: winner %s - loser: %s" % (winner, loser)
-        winner, loser = elo.match(winner, loser)
+        # print "Winner - %s" % winner
+        elo.update(winner=winner, losers=losers)
         db.session.commit()
 
+    player_context = Player.query.order_by(Player.score.desc()).all()
     session['player_store'] = [x.id for x in player_context]
 
-
     return render_template('main.html', players=player_context, form=buttonForm)
-
-def __get_random_player(match_threshold=None):
-    # load a random player from database
-    # match_threshold is between 0 and 100
-    count = Player.query.count()
-    if match_threshold:
-        rand = random.randint(0, int(count*0.01*match_threshold))
-        pl = Player.query.order_by(Player.matches.asc())[rand]
-    else:
-        rand = random.randrange(1, count+1)
-        pl = Player.query.get(rand)
-
-    return pl
 
 @app.route("/ranking/<int:limit>")
 def ranking(limit):
     limit = min(limit, 100)
-    top = Player.query.order_by(Player.score.desc()).limit(limit).all()
-    # print sorted([p.score for p in top])
-    return render_template('ranking.html', players=top)
+    ord_players = Player.query.order_by(Player.score.desc()).limit(limit).all()
+    return render_template('ranking.html', players=ord_players)
 
 @app.route("/player/<id>")
 def player_details(id):
@@ -111,7 +95,7 @@ def player_details(id):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('error.html', message="sorry, your are wrong: %s" % e, code=404), 404
+    return render_template('error.html', message="Mistyped? %s" % e, code=404), 404
 
 @app.errorhandler(500)
 def internal_server_error(e):
@@ -120,7 +104,7 @@ def internal_server_error(e):
 # forms
 class ButtonForm(FlaskForm):
     choice = HiddenField("choice")
-    submit = SubmitField("Vote")
+    submit = SubmitField("Buy")
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
