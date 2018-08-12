@@ -21,10 +21,11 @@ $ python server.py runserver # for hosting the web application
 ```
 
 # Samples
-![alt text](https://github.com/sidhantnagpal/elo-compare/blob/master/samples/ELO_5.png "Sample 1")
-![alt text](https://github.com/sidhantnagpal/elo-compare/blob/master/samples/ELO_3.png "Sample 2")
+![alt text](https://github.com/sidhantnagpal/elo-compare/blob/master/samples/ELO_1.png "Sample 1")
+![alt text](https://github.com/sidhantnagpal/elo-compare/blob/master/samples/ELO_2.png "Sample 2")
 ![alt text](https://github.com/sidhantnagpal/elo-compare/blob/master/samples/android_elo_1.png "Sample 3")
 ![alt text](https://github.com/sidhantnagpal/elo-compare/blob/master/samples/android_elo_2.png "Sample 4")
+![alt text](https://github.com/sidhantnagpal/elo-compare/blob/master/samples/android_elo_3.png "Sample 5")
 
 # How to Contribute?
 Feel free to ping me via [email](mailto:sidhantnagpal97@gmail.com).
